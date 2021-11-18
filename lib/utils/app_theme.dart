@@ -58,6 +58,9 @@ class AppTheme {
   static final lightTheme = _baseTheme(Brightness.light);
   static final darkTheme = _baseTheme(Brightness.dark).copyWith(
     scaffoldBackgroundColor: const Color(0xFF060A29),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: kSecondaryColor,
+    ),
     cardColor: kSecondaryColor,
   );
 }

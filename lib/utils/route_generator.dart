@@ -1,3 +1,4 @@
+import 'package:esports_ec/screens/bottom_nav_screen.dart';
 import 'package:esports_ec/screens/splash_screen.dart';
 import 'package:esports_ec/widgets/page_transition.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ class RouteGenerator {
     switch (settings.name) {
       case SplashScreen.id:
         return _route(const SplashScreen());
+      case BottomNavScreen.id:
+        return _route(const BottomNavScreen());
       default:
         return _errorRoute(settings.name);
     }
