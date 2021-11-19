@@ -1,16 +1,22 @@
 import 'package:esports_ec/screens/bottom_nav_screen.dart';
+import 'package:esports_ec/screens/course_screen.dart';
+import 'package:esports_ec/screens/my_courses_screen.dart';
 import 'package:esports_ec/screens/splash_screen.dart';
 import 'package:esports_ec/widgets/page_transition.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // final args = settings.arguments as dynamic;
+    final args = settings.arguments as dynamic;
     switch (settings.name) {
       case SplashScreen.id:
         return _route(const SplashScreen());
       case BottomNavScreen.id:
         return _route(const BottomNavScreen());
+      case CourseScreen.id:
+        return _route(CourseScreen(course: args));
+      case MyCoursesScreen.id:
+        return _route(const MyCoursesScreen());
       default:
         return _errorRoute(settings.name);
     }

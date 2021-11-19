@@ -1,3 +1,5 @@
+import 'package:esports_ec/models/course.dart';
+import 'package:esports_ec/widgets/course_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,15 +11,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Text(
-            'HomeScreen',
-            style: Theme.of(context).textTheme.headline3,
-          ),
-        ),
-      ),
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        final course = Course.example();
+        return CourseCard(course);
+      },
+      itemCount: 10,
     );
   }
 }

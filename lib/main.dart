@@ -13,7 +13,7 @@ class _ScrollBehavior extends ScrollBehavior {
 }
 
 class _MyApp extends StatelessWidget {
-  static const id = '_MyApp';
+  // static const id = '_MyApp';
 
   const _MyApp({
     Key? key,
@@ -27,7 +27,8 @@ class _MyApp extends StatelessWidget {
         child: child!,
       ),
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: SplashScreen.id,

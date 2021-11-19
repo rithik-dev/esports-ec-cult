@@ -11,15 +11,15 @@ class PageTransition<T> extends PageRouteBuilder<T> {
     Key? key,
     required this.child,
   }) : super(
-    pageBuilder: (_, __, ___) => child,
-    transitionDuration: _duration,
-    reverseTransitionDuration: _duration,
-    transitionsBuilder: (_, animation, __, child) => SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(1, 0),
-        end: Offset.zero,
-      ).animate(animation),
-      child: child,
-    ),
-  );
+          pageBuilder: (_, __, ___) => child,
+          transitionDuration: _duration,
+          reverseTransitionDuration: _duration,
+          transitionsBuilder: (_, animation, __, child) => FadeTransition(
+            opacity: Tween<double>(
+              begin: 0,
+              end: 1,
+            ).animate(animation),
+            child: child,
+          ),
+        );
 }

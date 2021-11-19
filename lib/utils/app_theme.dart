@@ -6,18 +6,15 @@ class AppTheme {
   static const _kAccentColor = Color(0xFFE64A68);
   static const kSecondaryColor = Color(0xFF032170);
 
+  static const _defaultFont = 'Montserrat';
+
   static const _elevation = 1.5;
 
-  static const bodyTextStyle = TextStyle(
-    fontWeight: FontWeight.w600,
-    color: Colors.black,
-    fontSize: 14,
-  );
-
-  static const dialogInsetPadding = EdgeInsets.fromLTRB(10, 100, 10, 100);
-
   static ThemeData _baseTheme(Brightness brightness) {
-    return ThemeData(brightness: brightness).copyWith(
+    return ThemeData(
+      brightness: brightness,
+      fontFamily: _defaultFont,
+    ).copyWith(
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: _kAccentColor,
         secondary: _kAccentColor,
