@@ -42,6 +42,17 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       MyTextField(
+                        labelText: 'Enter name',
+                        onChanged: (v) => _data['name'] = v,
+                        inputType: MyTextInputType.none,
+                        validator: (v) {
+                          if (Helpers.isNullOrBlank(v)) {
+                            return 'Please enter a valid name!';
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      MyTextField(
                         labelText: 'Enter username',
                         onChanged: (v) => _data['username'] = v,
                         inputType: MyTextInputType.none,
@@ -57,7 +68,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             startLoading(context, CompleteProfileScreen.id);
-                            await _userCon.updateProfile(_data);
+                            await _userCon.createProfile(_data);
                             stopLoading(context);
                             Helpers.showSnackBar(
                               context,

@@ -24,7 +24,10 @@ class UserController extends ChangeNotifier {
     return _user;
   }
 
-  Future<void> updateProfile(Map<String, dynamic> data) async {}
+  Future<User?> createProfile(Map<String, dynamic> data) async {
+    await UserRepository.createProfile(data: data);
+    return await _update();
+  }
 
   Future<User?> register({
     required String email,
