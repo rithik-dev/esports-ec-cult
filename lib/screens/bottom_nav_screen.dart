@@ -1,4 +1,5 @@
 import 'package:easy_container/easy_container.dart';
+import 'package:esports_ec/controllers/user_controller.dart';
 import 'package:esports_ec/screens/arena_screen.dart';
 import 'package:esports_ec/screens/home_screen.dart';
 import 'package:esports_ec/screens/profile_screen.dart';
@@ -23,6 +24,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = UserController.of(context).user;
+
     return SafeArea(
       child: Scaffold(
         appBar: _selectedIndex == 2
@@ -46,16 +49,16 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                   alignment: null,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        'Hi, Saksham',
-                        style: TextStyle(
+                        'Hi, ${user?.name ?? ''}',
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Text(
+                      const SizedBox(height: 5),
+                      const Text(
                         'Let\'s learn something...',
                         style: TextStyle(fontSize: 15),
                       ),

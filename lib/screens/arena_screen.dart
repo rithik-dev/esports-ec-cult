@@ -11,16 +11,30 @@ class ArenaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.75,
-      ),
-      itemBuilder: (context, index) {
-        final trainer = Trainer.example();
-        return TrainerCard(trainer);
-      },
-      itemCount: 10,
+    return ListView(
+      padding: const EdgeInsets.all(5),
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 5, bottom: 5, top: 10),
+          child: Text(
+            'Trainers For You',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+        ),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.75,
+          ),
+          itemBuilder: (context, index) {
+            final trainer = Trainer.example();
+            return TrainerCard(trainer);
+          },
+          itemCount: 10,
+        ),
+      ],
     );
   }
 }

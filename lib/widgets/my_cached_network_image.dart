@@ -53,8 +53,8 @@ class MyCachedNetworkImage extends StatelessWidget {
             imageUrl: url ?? _fallbackUrl,
             fit: zoomToFit ? BoxFit.cover : null,
             placeholder: (context, _) => Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: Theme.of(context).cardColor,
+              highlightColor: Theme.of(context).scaffoldBackgroundColor,
               period: const Duration(milliseconds: 250),
               child: const Material(color: Colors.white),
             ),

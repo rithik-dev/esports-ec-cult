@@ -14,6 +14,7 @@ class RatingBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EasyContainer(
+      elevation: 0,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -1,5 +1,7 @@
 import 'package:esports_ec/screens/bottom_nav_screen.dart';
 import 'package:esports_ec/screens/course_screen.dart';
+import 'package:esports_ec/screens/let_the_game_begin_screen.dart';
+import 'package:esports_ec/screens/login_screen.dart';
 import 'package:esports_ec/screens/my_courses_screen.dart';
 import 'package:esports_ec/screens/splash_screen.dart';
 import 'package:esports_ec/widgets/page_transition.dart';
@@ -17,6 +19,10 @@ class RouteGenerator {
         return _route(CourseScreen(course: args));
       case MyCoursesScreen.id:
         return _route(const MyCoursesScreen());
+      case LoginScreen.id:
+        return _route(const LoginScreen());
+      case LetTheGameBeginScreen.id:
+        return _route(const LetTheGameBeginScreen());
       default:
         return _errorRoute(settings.name);
     }

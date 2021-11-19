@@ -1,7 +1,9 @@
+import 'package:esports_ec/controllers/user_controller.dart';
 import 'package:esports_ec/screens/splash_screen.dart';
 import 'package:esports_ec/utils/app_theme.dart';
 import 'package:esports_ec/utils/route_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const _MyApp());
@@ -21,17 +23,24 @@ class _MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: (_, child) => ScrollConfiguration(
-        behavior: _ScrollBehavior(),
-        child: child!,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserController(),
+        ),
+      ],
+      child: MaterialApp(
+        builder: (_, child) => ScrollConfiguration(
+          behavior: _ScrollBehavior(),
+          child: child!,
+        ),
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.dark,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        initialRoute: SplashScreen.id,
       ),
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
-      onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: SplashScreen.id,
     );
   }
 }

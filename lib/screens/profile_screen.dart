@@ -1,4 +1,6 @@
 import 'package:easy_container/easy_container.dart';
+import 'package:esports_ec/controllers/user_controller.dart';
+import 'package:esports_ec/screens/login_screen.dart';
 import 'package:esports_ec/screens/my_courses_screen.dart';
 import 'package:esports_ec/widgets/my_cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -12,23 +14,26 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _userCon = UserController.of(context);
+    final user = _userCon.user;
+
     return ListView(
       padding: const EdgeInsets.all(10),
       children: [
         Column(
-          children: const [
+          children: [
             MyCachedNetworkImage(
-              url: '',
-              width: 150,
-              height: 150,
+              url: user?.image,
+              width: 175,
+              height: 175,
               padding: 10,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
-              'User_Name007',
-              style: TextStyle(fontSize: 24),
+              user?.username ?? '',
+              style: const TextStyle(fontSize: 22),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 25),
           ],
         ),
         _infoTile(
@@ -71,9 +76,18 @@ class ProfileScreen extends StatelessWidget {
           child: EasyContainer(
             color: Colors.red,
             alignment: null,
-            customPadding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            onTap: () {},
+            customPadding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 10,
+            ),
+            onTap: () async {
+              await _userCon.logout();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginScreen.id,
+                (route) => false,
+              );
+            },
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: const [

@@ -16,7 +16,10 @@ class LevelBar extends StatelessWidget {
     return EasyContainer(
       child: Text(
         level.toUpperCase(),
-        style: const TextStyle(color: Colors.cyan),
+        style: const TextStyle(
+          color: Colors.cyan,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       showBorder: true,
       margin: 0,

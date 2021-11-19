@@ -13,9 +13,9 @@ class CustomBackButton extends StatelessWidget {
     if (!Navigator.canPop(context)) return const SizedBox.shrink();
 
     return EasyContainer(
-      margin: 5,
+      margin: 7.5,
       borderRadius: 10,
-      color: Colors.white.withOpacity(0.5),
+      color: Colors.white.withOpacity(0.75),
       onTap: () => Navigator.pop(context),
       child: const Icon(
         Icons.arrow_back_ios_sharp,

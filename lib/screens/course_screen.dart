@@ -58,7 +58,7 @@ class CourseScreen extends StatelessWidget {
                         Icons.person,
                         color: Theme.of(context).colorScheme.secondary,
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 5),
                       Text(
                         course.instructor,
                         style: TextStyle(
@@ -110,7 +110,7 @@ class CourseScreen extends StatelessWidget {
                     subtitle: Row(
                       children: [
                         const Icon(
-                          Icons.access_alarm,
+                          Icons.access_time_rounded,
                           size: 15,
                           color: Colors.orange,
                         ),
