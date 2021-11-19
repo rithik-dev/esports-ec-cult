@@ -5,11 +5,13 @@ class MyButton extends StatelessWidget {
   static const id = 'MyButton';
 
   final String text;
+  final bool isBold;
   final VoidCallback? onTap;
 
   const MyButton({
     Key? key,
     required this.text,
+    this.isBold = false,
     this.onTap,
   }) : super(key: key);
 
@@ -28,7 +30,10 @@ class MyButton extends StatelessWidget {
         borderColor: Theme.of(context).colorScheme.secondary,
         child: Text(
           text,
-          style: const TextStyle(fontSize: 22),
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );

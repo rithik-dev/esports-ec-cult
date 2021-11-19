@@ -15,14 +15,26 @@ class LetTheGameBeginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: OnboardingBackground(
+        body: Column(
           children: [
-            MyButton(
-              text: 'Next',
-              onTap: () {
-                LocalStorage.write('first_time_open', false);
-                Navigator.pushReplacementNamed(context, AuthScreen.id);
-              },
+            Expanded(
+              child: OnboardingBackground(
+                children: [
+                  MyButton(
+                    text: 'START',
+                    isBold: true,
+                    onTap: () {
+                      LocalStorage.write('first_time_open', false);
+                      Navigator.pushReplacementNamed(context, AuthScreen.id);
+                    },
+                  ),
+                  Image.asset(
+                    'assets/images/graphic.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
