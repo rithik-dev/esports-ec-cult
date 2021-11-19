@@ -66,7 +66,7 @@ class MyTextField extends StatefulWidget {
     this.readOnly = false,
     this.overrideHintText = false,
     this.autofocus = false,
-    this.borderRadius = 10,
+    this.borderRadius = 5,
     this.inputType = MyTextInputType.sentences,
     this.contentPadding = const EdgeInsets.all(7.5),
   }) : super(key: key);
@@ -76,14 +76,6 @@ class MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<MyTextField> {
-  late final bool isRequired;
-
-  @override
-  void initState() {
-    isRequired = widget.validator?.call(null) != null;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -123,20 +115,8 @@ class _MyTextFieldState extends State<MyTextField> {
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
+              border: InputBorder.none,
               contentPadding: widget.contentPadding,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: Colors.transparent, width: 1),
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: Colors.transparent, width: 2),
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
             ).copyWith(
               hintText: widget.overrideHintText ? widget.hintText : null,
               labelText: widget.labelText,
@@ -145,15 +125,6 @@ class _MyTextFieldState extends State<MyTextField> {
             ),
           ),
         ),
-        if (isRequired)
-          Positioned(
-            right: 5,
-            top: (widget.margin?.top ?? 0) - 2.5,
-            child: const Text(
-              '*',
-              style: TextStyle(color: Colors.red, fontSize: 18),
-            ),
-          )
       ],
     );
   }

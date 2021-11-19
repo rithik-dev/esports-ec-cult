@@ -1,5 +1,6 @@
 import 'package:esports_ec/models/user.dart';
 import 'package:esports_ec/repositories/user_repository.dart';
+import 'package:esports_ec/services/auth_service.dart';
 import 'package:flutter/cupertino.dart' show BuildContext, ChangeNotifier;
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,8 @@ class UserController extends ChangeNotifier {
     return _user;
   }
 
+  Future<void> updateProfile(Map<String, dynamic> data) async {}
+
   Future<User?> register({
     required String email,
     required String password,
@@ -45,7 +48,7 @@ class UserController extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    //FIXME: logout from firebase
+    await AuthService.signOut();
     clear();
   }
 

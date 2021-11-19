@@ -44,8 +44,9 @@ class AppTheme {
       snackBarTheme: SnackBarThemeData(
         backgroundColor: _kAccentColor,
         elevation: _elevation,
+        contentTextStyle: const TextStyle(fontFamily: _defaultFont),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(10),
         ),
         behavior: SnackBarBehavior.floating,
       ),

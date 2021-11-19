@@ -1,11 +1,15 @@
+import 'package:esports_ec/controllers/loading_controller.dart';
 import 'package:esports_ec/controllers/user_controller.dart';
 import 'package:esports_ec/screens/splash_screen.dart';
 import 'package:esports_ec/utils/app_theme.dart';
 import 'package:esports_ec/utils/route_generator.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const _MyApp());
 }
 
@@ -27,6 +31,9 @@ class _MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => UserController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LoadingController(),
         ),
       ],
       child: MaterialApp(
