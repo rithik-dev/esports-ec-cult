@@ -48,7 +48,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Image.asset('assets/images/app-logo.png'),
+          child: Padding(
+            padding: const EdgeInsets.all(75),
+            child: Image.asset('assets/images/app-logo.png'),
+          ),
         ),
         bottomNavigationBar: const SizedBox(
           height: 150,
