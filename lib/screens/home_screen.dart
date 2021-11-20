@@ -1,5 +1,7 @@
-import 'package:esports_ec/models/course.dart';
-import 'package:esports_ec/widgets/course_card.dart';
+import 'package:esports_ec/models/instructor.dart';
+import 'package:esports_ec/repositories/main_repository.dart';
+import 'package:esports_ec/widgets/custom_loader.dart';
+import 'package:esports_ec/widgets/instructor_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,6 +11,8 @@ class HomeScreen extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  static final _trainersFuture = MainRepository.getInstructors();
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -17,18 +21,35 @@ class HomeScreen extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(left: 5, bottom: 5, top: 10),
           child: Text(
-            'Courses For You',
+            'Trainers For You',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            final course = Course.example();
-            return CourseCard(course);
+        FutureBuilder<List<Instructor>?>(
+          future: _trainersFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) {
+                  final instructor = snapshot.data?[index];
+                  if (instructor == null) {
+                    return const SizedBox.shrink();
+                  } else {
+                    return InstructorCard(instructor);
+                  }
+                },
+                itemCount: snapshot.data?.length ?? 0,
+              );
+            } else {
+              return const CustomLoader();
+            }
           },
-          itemCount: 10,
         ),
       ],
     );

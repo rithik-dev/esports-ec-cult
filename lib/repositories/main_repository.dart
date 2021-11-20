@@ -1,11 +1,14 @@
+import 'package:esports_ec/models/instructor.dart';
 import 'package:esports_ec/models/user.dart';
 import 'package:esports_ec/services/auth_service.dart';
 import 'package:esports_ec/services/firestore_service.dart';
 
-class UserRepository {
-  const UserRepository._();
+class MainRepository {
+  const MainRepository._();
 
-  static final _collection = FirestoreService.getCollectionRef('users');
+  static final _userCollection = FirestoreService.getCollectionRef('users');
+  static final _instructorsCollection =
+      FirestoreService.getCollectionRef('instructor');
 
   static Future<User?> getUserProfile() async {
     final uid = AuthService.firebaseUser?.uid;
@@ -13,9 +16,16 @@ class UserRepository {
     if (uid == null) {
       return null;
     } else {
-      final userSnapshot = await _collection.doc(uid).get();
+      final userSnapshot = await _userCollection.doc(uid).get();
       if (userSnapshot.exists) return User.fromDocumentSnapshot(userSnapshot);
     }
+  }
+
+  static Future<List<Instructor>?> getInstructors() async {
+    final _trainersSnapshot = await _instructorsCollection.get();
+    return _trainersSnapshot.docs
+        .map((e) => Instructor.fromDocumentSnapshot(e))
+        .toList();
   }
 
   static Future<void> createProfile({
@@ -26,7 +36,8 @@ class UserRepository {
     if (uid == null) {
       return;
     } else {
-      await _collection.doc(uid).set(data);
+      data['email'] ??= AuthService.firebaseUser?.email;
+      await _userCollection.doc(uid).set(data);
     }
   }
 
@@ -38,7 +49,7 @@ class UserRepository {
     if (uid == null) {
       return;
     } else {
-      await _collection.doc(uid).update(data);
+      await _userCollection.doc(uid).update(data);
     }
   }
 }

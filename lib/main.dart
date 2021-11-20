@@ -5,6 +5,7 @@ import 'package:esports_ec/utils/app_theme.dart';
 import 'package:esports_ec/utils/route_generator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,6 +28,8 @@ class _MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

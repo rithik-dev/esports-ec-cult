@@ -2,7 +2,6 @@ import 'package:easy_container/easy_container.dart';
 import 'package:esports_ec/controllers/user_controller.dart';
 import 'package:esports_ec/screens/auth_screen.dart';
 import 'package:esports_ec/screens/bottom_nav_screen.dart';
-import 'package:esports_ec/screens/my_courses_screen.dart';
 import 'package:esports_ec/utils/helpers.dart';
 import 'package:esports_ec/widgets/loading_overlay.dart';
 import 'package:esports_ec/widgets/my_cached_network_image.dart';
@@ -47,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
         _infoTile(
           icon: 'my_courses',
           title: 'My Courses',
-          onTap: () => Navigator.pushNamed(context, MyCoursesScreen.id),
+          onTap: () {},
         ),
         const Divider(
           color: Colors.white,

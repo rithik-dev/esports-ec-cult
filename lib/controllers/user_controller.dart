@@ -1,5 +1,5 @@
 import 'package:esports_ec/models/user.dart';
-import 'package:esports_ec/repositories/user_repository.dart';
+import 'package:esports_ec/repositories/main_repository.dart';
 import 'package:esports_ec/services/auth_service.dart';
 import 'package:flutter/cupertino.dart' show BuildContext, ChangeNotifier;
 import 'package:provider/provider.dart';
@@ -25,7 +25,7 @@ class UserController extends ChangeNotifier {
   }
 
   Future<User?> createProfile(Map<String, dynamic> data) async {
-    await UserRepository.createProfile(data: data);
+    await MainRepository.createProfile(data: data);
     return await _update();
   }
 
@@ -46,7 +46,7 @@ class UserController extends ChangeNotifier {
   }
 
   Future<User?> initializeUser() async {
-    final _currentUser = await UserRepository.getUserProfile();
+    final _currentUser = await MainRepository.getUserProfile();
     if (_currentUser != null) return await _update(_currentUser);
   }
 

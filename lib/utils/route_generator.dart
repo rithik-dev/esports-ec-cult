@@ -1,10 +1,9 @@
 import 'package:esports_ec/screens/auth_screen.dart';
 import 'package:esports_ec/screens/bottom_nav_screen.dart';
 import 'package:esports_ec/screens/complete_profile_screen.dart';
-import 'package:esports_ec/screens/course_screen.dart';
 import 'package:esports_ec/screens/let_the_game_begin_screen.dart';
-import 'package:esports_ec/screens/my_courses_screen.dart';
 import 'package:esports_ec/screens/splash_screen.dart';
+import 'package:esports_ec/screens/instructor_screen.dart';
 import 'package:esports_ec/widgets/page_transition.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +15,10 @@ class RouteGenerator {
         return _route(const SplashScreen());
       case BottomNavScreen.id:
         return _route(const BottomNavScreen());
-      case CourseScreen.id:
-        return _route(CourseScreen(course: args));
-      case MyCoursesScreen.id:
-        return _route(const MyCoursesScreen());
+      // case CourseScreen.id:
+      //   return _route(CourseScreen(course: args));
+      case InstructorScreen.id:
+        return _route(InstructorScreen(instructor: args));
       case AuthScreen.id:
         return _route(const AuthScreen());
       case LetTheGameBeginScreen.id:

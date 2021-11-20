@@ -28,12 +28,14 @@ class LetTheGameBeginScreen extends StatelessWidget {
                       Navigator.pushReplacementNamed(context, AuthScreen.id);
                     },
                   ),
-                  Image.asset(
-                    'assets/images/graphic.png',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: Image.asset(
+                'assets/images/graphic.png',
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
           ],

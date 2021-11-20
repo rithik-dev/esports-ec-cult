@@ -20,7 +20,9 @@ class CompleteProfileScreen extends StatefulWidget {
 }
 
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
-  final _data = <String, dynamic>{};
+  final _data = <String, dynamic>{
+    'age': 18.0,
+  };
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -37,7 +39,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               child: OnboardingBackground(
                 children: [
                   ListView(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(20),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
@@ -63,11 +65,34 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         },
                       ),
                       const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Text(
+                            'Age',
+                            style: TextStyle(fontSize: 22),
+                          ),
+                          Expanded(
+                            child: Slider(
+                              value: _data['age'],
+                              onChanged: (age) =>
+                                  setState(() => _data['age'] = age),
+                              min: 5,
+                              max: 80,
+                            ),
+                          ),
+                          Text(
+                            _data['age'].toStringAsFixed(0),
+                            style: const TextStyle(fontSize: 22),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
                       MyButton(
                         text: 'Complete Profile',
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             startLoading(context, CompleteProfileScreen.id);
+                            _data['age'] = _data['age'].toInt();
                             await _userCon.createProfile(_data);
                             stopLoading(context);
                             Helpers.showSnackBar(

@@ -1,16 +1,17 @@
 import 'package:easy_container/easy_container.dart';
-import 'package:esports_ec/models/trainer.dart';
+import 'package:esports_ec/models/instructor.dart';
+import 'package:esports_ec/screens/instructor_screen.dart';
 import 'package:esports_ec/widgets/my_cached_network_image.dart';
 import 'package:esports_ec/widgets/rating_bar.dart';
 import 'package:flutter/material.dart';
 
-class TrainerCard extends StatelessWidget {
-  static const id = 'TrainerCard';
+class InstructorCard extends StatelessWidget {
+  static const id = 'InstructorCard';
 
-  final Trainer trainer;
+  final Instructor instructor;
 
-  const TrainerCard(
-    this.trainer, {
+  const InstructorCard(
+    this.instructor, {
     Key? key,
   }) : super(key: key);
 
@@ -18,14 +19,18 @@ class TrainerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return EasyContainer(
       margin: 0,
-      onTap: () {},
+      onTap: () => Navigator.pushNamed(
+        context,
+        InstructorScreen.id,
+        arguments: instructor,
+      ),
       color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: MyCachedNetworkImage(
-              url: trainer.image,
+              url: instructor.image,
               padding: 0,
               height: 225,
               width: double.infinity,
@@ -33,13 +38,13 @@ class TrainerCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            trainer.name,
+            instructor.name,
             style: const TextStyle(fontSize: 20),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 5),
-          RatingBar(rating: trainer.rating),
+          RatingBar(rating: instructor.rating.toDouble()),
         ],
       ),
     );
