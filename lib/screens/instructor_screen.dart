@@ -1,12 +1,15 @@
 import 'package:easy_container/easy_container.dart';
+import 'package:esports_ec/controllers/user_controller.dart';
 import 'package:esports_ec/models/instructor.dart';
 import 'package:esports_ec/utils/app_theme.dart';
+import 'package:esports_ec/utils/helpers.dart';
 import 'package:esports_ec/widgets/custom_back_button.dart';
 import 'package:esports_ec/widgets/my_button.dart';
 import 'package:esports_ec/widgets/my_cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class InstructorScreen extends StatelessWidget {
+class InstructorScreen extends StatefulWidget {
   static const id = 'InstructorScreen';
 
   final Instructor instructor;
@@ -15,6 +18,57 @@ class InstructorScreen extends StatelessWidget {
     Key? key,
     required this.instructor,
   }) : super(key: key);
+
+  @override
+  State<InstructorScreen> createState() => _InstructorScreenState();
+}
+
+class _InstructorScreenState extends State<InstructorScreen> {
+  late Razorpay razorPay;
+
+  @override
+  void initState() {
+    super.initState();
+
+    razorPay = Razorpay();
+
+    razorPay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
+    razorPay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
+    razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+  }
+
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {}
+
+  void handlerErrorFailure(PaymentFailureResponse response) async {
+    Helpers.showSnackBar(
+      context,
+      text: 'Something went wrong!',
+    );
+  }
+
+  void handlerExternalWallet(ExternalWalletResponse response) {}
+
+  void openCheckout(int amount, String? email) {
+    var options = {
+      "key": "rzp_live_L9GwPvLqbmqkQ8",
+      "amount": amount * 100,
+      "name": "Esports ECult",
+      "description": "Start Learning!!!",
+      "prefill": {"email": email},
+      "external": {
+        "wallets": ["paytm"]
+      }
+    };
+
+    try {
+      razorPay.open(options);
+    } catch (e) {
+      Helpers.showSnackBar(
+        context,
+        text: 'Something went wrong!',
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +90,7 @@ class InstructorScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  instructor.name,
+                  widget.instructor.name,
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -44,13 +98,13 @@ class InstructorScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 MyCachedNetworkImage(
-                  url: instructor.image,
+                  url: widget.instructor.image,
                   height: 300,
                   width: double.infinity,
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  instructor.description,
+                  widget.instructor.description,
                   style: const TextStyle(fontSize: 18),
                 ),
               ],
@@ -60,8 +114,9 @@ class InstructorScreen extends StatelessWidget {
               children: List.generate(5, (index) {
                 return Icon(
                   Icons.star,
-                  color:
-                      instructor.rating <= index ? Colors.white : Colors.orange,
+                  color: widget.instructor.rating <= index
+                      ? Colors.white
+                      : Colors.orange,
                 );
               }),
             ),
@@ -91,7 +146,7 @@ class InstructorScreen extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              final review = instructor.reviews[index];
+              final review = widget.instructor.reviews[index];
               return EasyContainer(
                 color: Theme.of(context).cardColor,
                 onTap: () {
@@ -150,7 +205,7 @@ class InstructorScreen extends StatelessWidget {
                 ),
               );
             },
-            itemCount: instructor.reviews.length,
+            itemCount: widget.instructor.reviews.length,
           ),
         ),
         const SizedBox(height: 15),
@@ -166,7 +221,13 @@ class InstructorScreen extends StatelessWidget {
   void _bookNow(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => _BookNowDialog(instructor: instructor),
+      builder: (context) => _BookNowDialog(
+        instructor: widget.instructor,
+        onBook: (level) => openCheckout(
+          level.price,
+          UserController.of(context, listen: false).user?.email,
+        ),
+      ),
     );
   }
 }
@@ -175,10 +236,12 @@ class _BookNowDialog extends StatefulWidget {
   // static const id = '_BookNowDialog';
 
   final Instructor instructor;
+  final void Function(InstructorLevel) onBook;
 
   const _BookNowDialog({
     Key? key,
     required this.instructor,
+    required this.onBook,
   }) : super(key: key);
 
   @override
@@ -186,10 +249,10 @@ class _BookNowDialog extends StatefulWidget {
 }
 
 class __BookNowDialogState extends State<_BookNowDialog> {
-  String? _selectedLevel;
+  late InstructorLevel _selectedLevel;
 
   Widget _buildTile(String text, InstructorLevel level) {
-    return RadioListTile<String>(
+    return RadioListTile<InstructorLevel>(
       title: Text(
         '$text @₹${level.price}',
         style: const TextStyle(fontSize: 18),
@@ -200,9 +263,15 @@ class __BookNowDialogState extends State<_BookNowDialog> {
       ),
       groupValue: _selectedLevel,
       controlAffinity: ListTileControlAffinity.trailing,
-      value: text,
-      onChanged: (v) => setState(() => _selectedLevel = v),
+      value: level,
+      onChanged: (v) => setState(() => _selectedLevel = level),
     );
+  }
+
+  @override
+  void initState() {
+    _selectedLevel = widget.instructor.bronze;
+    super.initState();
   }
 
   @override
@@ -223,6 +292,7 @@ class __BookNowDialogState extends State<_BookNowDialog> {
             isBold: true,
             onTap: () {
               Navigator.pop(context);
+              widget.onBook(_selectedLevel);
             },
           ),
           const SizedBox(height: 10),
