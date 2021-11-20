@@ -10,9 +10,9 @@ class Instructor {
   late final String description;
   late final String twitchId;
   late final String image;
-  late final _Level bronze;
-  late final _Level silver;
-  late final _Level gold;
+  late final InstructorLevel bronze;
+  late final InstructorLevel silver;
+  late final InstructorLevel gold;
 
   factory Instructor.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     final _json = (snapshot.data() ?? {}) as Map<String, dynamic>;
@@ -33,9 +33,9 @@ class Instructor {
     studentsEnrolled = json['studentsEnrolled'];
     instaId = json['instaId'];
     twitchId = json['twitchId'];
-    bronze = _Level.fromJson(json['bronze']);
-    silver = _Level.fromJson(json['silver']);
-    gold = _Level.fromJson(json['gold']);
+    bronze = InstructorLevel.fromJson(json['bronze']);
+    silver = InstructorLevel.fromJson(json['silver']);
+    gold = InstructorLevel.fromJson(json['gold']);
   }
 }
 
@@ -49,11 +49,11 @@ class _Review {
   }
 }
 
-class _Level {
+class InstructorLevel {
   late final int hours;
   late final int price;
 
-  _Level.fromJson(Map<String, dynamic> json) {
+  InstructorLevel.fromJson(Map<String, dynamic> json) {
     hours = json['hours'];
     price = json['price'];
   }

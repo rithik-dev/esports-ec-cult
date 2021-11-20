@@ -89,6 +89,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         MyTextField(
                           labelText: 'Enter password',
                           inputType: MyTextInputType.none,
+                          obscureText: true,
                           onChanged: (v) => _data['password'] = v,
                           validator: (v) {
                             if (Helpers.isNullOrBlank(v)) {

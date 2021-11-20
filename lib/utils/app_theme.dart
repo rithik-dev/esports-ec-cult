@@ -10,6 +10,8 @@ class AppTheme {
 
   static const _elevation = 1.5;
 
+  static const dialogInsetPadding = EdgeInsets.fromLTRB(10, 100, 10, 100);
+
   static ThemeData _baseTheme(Brightness brightness) {
     return ThemeData(
       brightness: brightness,

@@ -21,6 +21,7 @@ class MyTextField extends StatefulWidget {
   final String? defaultValue;
   final Widget? leading;
   final Widget? trailing;
+  final bool obscureText;
   final bool autofocus;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -52,6 +53,7 @@ class MyTextField extends StatefulWidget {
     this.hintTextStyle,
     this.onChanged,
     this.onFieldSubmitted,
+    this.obscureText = false,
     this.hintText,
     this.trailingFunction,
     this.defaultValue,
@@ -99,6 +101,7 @@ class _MyTextFieldState extends State<MyTextField> {
             style: widget.textStyle,
             initialValue: widget.defaultValue,
             maxLines: widget.maxLines,
+            obscureText: widget.obscureText,
             onTap: widget.onTap,
             textAlignVertical: TextAlignVertical.center,
             autofocus: widget.autofocus,

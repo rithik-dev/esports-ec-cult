@@ -73,7 +73,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           ),
                           Expanded(
                             child: Slider(
-                              value: _data['age'],
+                              value: _data['age'].toDouble(),
                               onChanged: (age) =>
                                   setState(() => _data['age'] = age),
                               min: 5,
