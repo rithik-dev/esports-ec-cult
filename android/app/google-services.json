@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "967942178521-8pvprk7ntd8dr0o1amv6ge7qvblg4l5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.esports_ec",
+            "certificate_hash": "9a80fdc8f1b2856a07ed99a4ac1c35951688f7dc"
+          }
+        },
+        {
           "client_id": "967942178521-qnju0c7p6m6u3sq88ce1sntmdb7aquk3.apps.googleusercontent.com",
           "client_type": 3
         }
