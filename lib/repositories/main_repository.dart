@@ -9,6 +9,8 @@ class MainRepository {
   static final _userCollection = FirestoreService.getCollectionRef('users');
   static final _instructorsCollection =
       FirestoreService.getCollectionRef('instructor');
+  static final _transactionsCollection =
+      FirestoreService.getCollectionRef('transaction');
 
   static Future<User?> getUserProfile() async {
     final uid = AuthService.firebaseUser?.uid;
@@ -41,15 +43,9 @@ class MainRepository {
     }
   }
 
-  static Future<void> updateProfile({
+  static Future<void> createTransaction({
     required Map<String, dynamic> data,
   }) async {
-    final uid = AuthService.firebaseUser?.uid;
-
-    if (uid == null) {
-      return;
-    } else {
-      await _userCollection.doc(uid).update(data);
-    }
+    await _transactionsCollection.add(data);
   }
 }

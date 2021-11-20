@@ -1,6 +1,7 @@
 import 'package:easy_container/easy_container.dart';
 import 'package:esports_ec/controllers/user_controller.dart';
 import 'package:esports_ec/models/instructor.dart';
+import 'package:esports_ec/repositories/main_repository.dart';
 import 'package:esports_ec/utils/app_theme.dart';
 import 'package:esports_ec/utils/helpers.dart';
 import 'package:esports_ec/widgets/custom_back_button.dart';
@@ -25,6 +26,7 @@ class InstructorScreen extends StatefulWidget {
 
 class _InstructorScreenState extends State<InstructorScreen> {
   late Razorpay razorPay;
+  late InstructorLevel _selectedLevel;
 
   @override
   void initState() {
@@ -37,20 +39,53 @@ class _InstructorScreenState extends State<InstructorScreen> {
     razorPay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
   }
 
-  void handlerPaymentSuccess(PaymentSuccessResponse response) async {}
+  Future<void> _createTransaction({
+    required String status,
+    required String? orderId,
+  }) async {
+    final user = UserController.of(context, listen: false).user;
+    await MainRepository.createTransaction(data: {
+      'razorpayId': orderId,
+      'status': status,
+      'trainerDetails': {
+        'id': widget.instructor.id,
+        'name': widget.instructor.name,
+      },
+      'paymentDetails': {
+        'hours': _selectedLevel.hours,
+        'price': _selectedLevel.price,
+        'level': _selectedLevel.name,
+      },
+      'customerDetails': {
+        'id': user?.id,
+        'name': user?.name,
+        'email': user?.email,
+      },
+      'createdAt': DateTime.now(),
+    });
+  }
 
-  void handlerErrorFailure(PaymentFailureResponse response) async {
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {
+    await _createTransaction(status: 'success', orderId: response.paymentId);
     Helpers.showSnackBar(
       context,
-      text: 'Something went wrong!',
+      text: 'Payment successful!',
+    );
+  }
+
+  void handlerErrorFailure(PaymentFailureResponse response) async {
+    await _createTransaction(status: 'failure', orderId: response.message);
+    Helpers.showSnackBar(
+      context,
+      text: 'Payment failed!',
     );
   }
 
   void handlerExternalWallet(ExternalWalletResponse response) {}
 
   void openCheckout(int amount, String? email) {
-    var options = {
-      "key": "rzp_live_L9GwPvLqbmqkQ8",
+    final options = {
+      "key": "rzp_test_TAfCw5zIu2X8dJ",
       "amount": amount * 100,
       "name": "Esports ECult",
       "description": "Start Learning!!!",
@@ -223,10 +258,13 @@ class _InstructorScreenState extends State<InstructorScreen> {
       context: context,
       builder: (context) => _BookNowDialog(
         instructor: widget.instructor,
-        onBook: (level) => openCheckout(
-          level.price,
-          UserController.of(context, listen: false).user?.email,
-        ),
+        onBook: (level) {
+          _selectedLevel = level;
+          openCheckout(
+            level.price,
+            UserController.of(context, listen: false).user?.email,
+          );
+        },
       ),
     );
   }

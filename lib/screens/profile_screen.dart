@@ -4,7 +4,6 @@ import 'package:esports_ec/screens/auth_screen.dart';
 import 'package:esports_ec/screens/bottom_nav_screen.dart';
 import 'package:esports_ec/utils/helpers.dart';
 import 'package:esports_ec/widgets/loading_overlay.dart';
-import 'package:esports_ec/widgets/my_cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -24,11 +23,14 @@ class ProfileScreen extends StatelessWidget {
       children: [
         Column(
           children: [
-            MyCachedNetworkImage(
-              url: user?.image,
-              width: 175,
-              height: 175,
-              padding: 10,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Image.asset(
+                'assets/images/profile.png',
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 5),
             Text(

@@ -33,9 +33,18 @@ class Instructor {
     studentsEnrolled = json['studentsEnrolled'];
     instaId = json['instaId'];
     twitchId = json['twitchId'];
-    bronze = InstructorLevel.fromJson(json['bronze']);
-    silver = InstructorLevel.fromJson(json['silver']);
-    gold = InstructorLevel.fromJson(json['gold']);
+    bronze = InstructorLevel.fromJson({
+      'name': 'bronze',
+      ...json['bronze'],
+    });
+    silver = InstructorLevel.fromJson({
+      'name': 'silver',
+      ...json['silver'],
+    });
+    gold = InstructorLevel.fromJson({
+      'name': 'gold',
+      ...json['gold'],
+    });
   }
 }
 
@@ -50,10 +59,12 @@ class _Review {
 }
 
 class InstructorLevel {
+  late final String name;
   late final int hours;
   late final int price;
 
   InstructorLevel.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
     hours = json['hours'];
     price = json['price'];
   }
