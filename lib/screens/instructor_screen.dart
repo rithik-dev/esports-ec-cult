@@ -85,7 +85,7 @@ class _InstructorScreenState extends State<InstructorScreen> {
 
   void openCheckout(int amount, String? email) {
     final options = {
-      "key": "rzp_test_TAfCw5zIu2X8dJ",
+      "key": "rzp_live_rSxNzFptmLBHz6",
       "amount": amount * 100,
       "name": "Esports ECult",
       "description": "Start Learning!!!",
